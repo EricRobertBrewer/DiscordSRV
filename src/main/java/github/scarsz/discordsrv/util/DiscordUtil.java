@@ -681,6 +681,14 @@ public class DiscordUtil {
         }
     }
 
+    public static VoiceChannel getVoiceChannelById(String channelId) {
+        try {
+            return getJda().getVoiceChannelById(channelId);
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
     public static Member getMemberById(String memberId) {
         try {
             return getJda().getGuilds().stream()

@@ -45,6 +45,7 @@ import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.entities.Guild;
 import net.dv8tion.jda.core.entities.TextChannel;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.entities.VoiceChannel;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -85,6 +86,7 @@ public class DiscordSRV extends JavaPlugin implements Listener {
     @Getter private CommandManager commandManager = new CommandManager();
     @Getter private File configFile = new File(getDataFolder(), "config.yml");
     @Getter private TextChannel consoleChannel;
+    @Getter private VoiceChannel generalVoiceChannel;
     @Getter private Queue<String> consoleMessageQueue = new LinkedList<>();
     @Getter private ConsoleMessageQueueWorker consoleMessageQueueWorker;
     @Getter private File debugFolder = new File(getDataFolder(), "debug");
@@ -283,7 +285,7 @@ public class DiscordSRV extends JavaPlugin implements Listener {
         // log in to discord
         try {
             jda = new JDABuilder(AccountType.BOT)
-                    .setAudioEnabled(false)
+                    .setAudioEnabled(true)
                     .setAutoReconnect(true)
                     .setBulkDeleteSplittingEnabled(false)
                     .setToken(getConfig().getString("BotToken"))
@@ -333,6 +335,9 @@ public class DiscordSRV extends JavaPlugin implements Listener {
         // set console channel
         String consoleChannelId = getConfig().getString("DiscordConsoleChannelId");
         if (consoleChannelId != null) consoleChannel = DiscordUtil.getTextChannelById(consoleChannelId);
+
+        String generalVoiceChannelId = getConfig().getString("DiscordGeneralVoiceChannelId");
+        if (generalVoiceChannelId != null) generalVoiceChannel = DiscordUtil.getVoiceChannelById(generalVoiceChannelId);
 
         // see if console channel exists; if it does, tell user where it's been assigned & add console appender
         if (serverIsLog4jCapable && consoleChannel != null) {

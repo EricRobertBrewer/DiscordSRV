@@ -22,6 +22,7 @@ commands:
            /discord setpicture - Set the avatar of the bot
            /discord debug - Send debug information to Gist
            /discord reload - Reload the plugin
+           /discord voice - Join the General voice channel
 
 permissions:
   discordsrv.player:
@@ -32,6 +33,7 @@ permissions:
       discordsrv.help: true
       discordsrv.link: true
       discordsrv.linked: true
+      discordsrv.voice: true
   discordsrv.admin:
     description: parent permission of admin-related functions of DiscordSRV
     default: op
@@ -87,3 +89,6 @@ permissions:
   discordsrv.linked.others:
     description: whether or not the player is able to check what Discord account other Minecraft accounts are linked to
     default: op
+  discordsrv.voice:
+    description: whether or not the player is able to join the Discord General voice channel from Minecraft
+    default: true
